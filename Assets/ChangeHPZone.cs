@@ -7,12 +7,21 @@ public class ChangeHPZone : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        CheckPlayer(other);
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        CheckPlayer(other);
+    }
+
+    private void CheckPlayer(Collider2D other)
+    {
         if (other.CompareTag("Player"))
         {
             PlayerController playerController = other.GetComponent<PlayerController>();
-            playerController.ChangeHP(changeHPAmount);
 
-            if(destroyAfterUse)
+            if (playerController.ChangeHP(changeHPAmount) && destroyAfterUse)
             {
                 Destroy(gameObject);
             }
