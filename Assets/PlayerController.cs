@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,6 +9,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float invincibleTime = 1;
     [SerializeField] private InputAction moveAction;
 
+    private Animator animator;
+    private SpriteRenderer spriteRenderer;
     private Vector2 move;
     private int currentHP;
     private float invincibleCoolDownTimer;
@@ -16,6 +19,9 @@ public class PlayerController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
         currentHP = maxHP;
 
         moveAction.Enable();
@@ -25,6 +31,12 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         move = moveAction.ReadValue<Vector2>();
+
+        animator.SetFloat("Speed", move.sqrMagnitude);
+        animator.SetFloat("SpeedX", move.x);
+        animator.SetFloat("SpeedY", move.y);
+
+        spriteRenderer.flipX = move.x > 0;
 
         if(invincibleCoolDownTimer > 0)
         {
