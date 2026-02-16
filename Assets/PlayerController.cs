@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,7 +6,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private int maxHP = 5;
     [SerializeField] private float invincibleTime = 1;
+    [SerializeField] private Projectile projectilePrefab;
     [SerializeField] private InputAction moveAction;
+    [SerializeField] private InputAction launchProjectileAction;
 
     private Animator animator;
     private SpriteRenderer spriteRenderer;
@@ -25,6 +26,7 @@ public class PlayerController : MonoBehaviour
         currentHP = maxHP;
 
         moveAction.Enable();
+        launchProjectileAction.Enable();
     }
 
     // Update is called once per framess
@@ -47,11 +49,24 @@ public class PlayerController : MonoBehaviour
         {
             isInvincible = false;
         }
+
+        if(launchProjectileAction.WasPressedThisFrame())
+        {
+            LaunchProjectile();
+        }
     }
 
     void FixedUpdate()
     {
         transform.position += new Vector3(move.x, move.y, 0) * speed * Time.deltaTime;
+    }
+
+    private void LaunchProjectile()
+    {
+        Projectile projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+        projectile.Launch(move, 300);
+
+        animator.SetTrigger("Launch");
     }
 
     public bool ChangeHP(int amount)

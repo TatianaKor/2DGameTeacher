@@ -1321,7 +1321,7 @@ GameObject:
   - component: {fileID: 551451815}
   - component: {fileID: 551451816}
   - component: {fileID: 551451817}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlayerCharacter
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1343,6 +1343,8 @@ MonoBehaviour:
   speed: 4
   maxHP: 5
   invincibleTime: 1
+  projectilePrefab: {fileID: 198168450933769251, guid: 668f11e9c84127849adfe7974235aed2,
+    type: 3}
   moveAction:
     m_Name: Move
     m_Type: 0
@@ -1423,6 +1425,23 @@ MonoBehaviour:
       m_Groups: 
       m_Action: Move
       m_Flags: 8
+    m_Flags: 0
+  launchProjectileAction:
+    m_Name: Launch Projectile
+    m_Type: 1
+    m_ExpectedControlType: Button
+    m_Id: 4cb44dfe-30bf-4265-96bd-65df2e13928e
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 1507a5e8-b213-4e55-85f1-571660b71143
+      m_Path: <Keyboard>/c
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Launch Projectile
+      m_Flags: 0
     m_Flags: 0
 --- !u!212 &551451813
 SpriteRenderer:
@@ -3149,6 +3168,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 531044805995311170, guid: c1c9a999c2bd4f34eb41f309746095f8,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 531044805995311170, guid: c1c9a999c2bd4f34eb41f309746095f8,
+        type: 3}
+      propertyPath: m_FlipY
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 731276995711494238, guid: c1c9a999c2bd4f34eb41f309746095f8,
         type: 3}
       propertyPath: m_Name
@@ -4269,7 +4298,7 @@ GameObject:
   - component: {fileID: 2076175257}
   - component: {fileID: 2076175256}
   - component: {fileID: 2076175255}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}

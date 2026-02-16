@@ -6,18 +6,27 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private bool isVertical;
     [SerializeField] private float changeDirectionTime;
 
+    private Animator animator;
+    private SpriteRenderer spriteRenderer;
     private Rigidbody2D rb;
     private float changeDirectionCooldownTimer;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         changeDirectionCooldownTimer = changeDirectionTime;
     }
 
     void Update()
     {
+        animator.SetFloat("SpeedX", isVertical ? 0 : speed);
+        animator.SetFloat("SpeedY", isVertical ? speed : 0);
+
+        spriteRenderer.flipX = animator.GetFloat("SpeedX") > 0;
+
         changeDirectionCooldownTimer -= Time.deltaTime;
         if(changeDirectionCooldownTimer < 0)
         {
