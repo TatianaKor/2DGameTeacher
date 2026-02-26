@@ -10,6 +10,7 @@ public class EnemyController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D rb;
     private float changeDirectionCooldownTimer;
+    private bool isFixed = false;
 
     void Start()
     {
@@ -37,8 +38,12 @@ public class EnemyController : MonoBehaviour
 
     void FixedUpdate()
     {
-        Vector2 nextPosition = rb.position;
+        if(isFixed)
+        {
+            return;
+        }
 
+        Vector2 nextPosition = rb.position;
         if(isVertical)
         {
             nextPosition.y += speed * Time.deltaTime;
@@ -48,16 +53,25 @@ public class EnemyController : MonoBehaviour
             nextPosition.x += speed * Time.deltaTime;
         }
 
-
         rb.MovePosition(nextPosition);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if(isFixed)
+        {
+            return;
+        }
+
         if(other.CompareTag("Player"))
         {
             PlayerController playerController = other.GetComponent<PlayerController>();
             playerController.ChangeHP(-1);
+        }
+        else if(other.CompareTag("Projectile"))
+        {
+            animator.SetTrigger("Fixed");
+            isFixed = true;
         }
     }
 }

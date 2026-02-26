@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3452212748533893082}
   - component: {fileID: 5733558127830085882}
   - component: {fileID: 4509935410572233859}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CollectibleHealth
   m_TagString: Untagged
   m_Icon: {fileID: 0}

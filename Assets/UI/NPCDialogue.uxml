@@ -1,0 +1,5 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Background" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); background-image: url(&quot;project://database/Assets/_2DAdventureGame/Art/Ruby/UI/UIDialogueBox.png?fileID=21300000&amp;guid=c4592e9bd029fcc45843314f2192f59e&amp;type=3#UIDialogueBox&quot;);">
+        <ui:Label text="Hey! Help me to fix all those broken robots!" style="height: 100%; width: 100%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 40px; padding-right: 40px; padding-bottom: 40px; padding-left: 40px; font-size: 50px; white-space: normal; color: rgb(255, 255, 255); -unity-font-definition: url(&quot;project://database/Assets/_2DAdventureGame/Settings/UnityDefaultRuntimeTheme.tss?fileID=2230732570650464555&amp;guid=4d9148f77f45cc549a00af7a6c514395&amp;type=3#NotInter-Regular&quot;); -unity-font-style: bold;" />
+    </ui:VisualElement>
+</ui:UXML>

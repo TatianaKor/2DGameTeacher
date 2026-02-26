@@ -9,10 +9,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Projectile projectilePrefab;
     [SerializeField] private InputAction moveAction;
     [SerializeField] private InputAction launchProjectileAction;
+    [SerializeField] private InputAction interactionAction;
 
     private Animator animator;
     private SpriteRenderer spriteRenderer;
     private Vector2 move;
+    private Vector2 lastMove = Vector2.down;
     private int currentHP;
     private float invincibleCoolDownTimer;
     private bool isInvincible = false;
@@ -27,6 +29,7 @@ public class PlayerController : MonoBehaviour
 
         moveAction.Enable();
         launchProjectileAction.Enable();
+        interactionAction.Enable();
     }
 
     // Update is called once per framess
@@ -34,11 +37,16 @@ public class PlayerController : MonoBehaviour
     {
         move = moveAction.ReadValue<Vector2>();
 
-        animator.SetFloat("Speed", move.sqrMagnitude);
-        animator.SetFloat("SpeedX", move.x);
-        animator.SetFloat("SpeedY", move.y);
+        if (move.sqrMagnitude > 0.1f)
+        {
+            lastMove = move;
+        }
 
-        spriteRenderer.flipX = move.x > 0;
+        animator.SetFloat("Speed", move.sqrMagnitude);
+        animator.SetFloat("SpeedX", lastMove.x);
+        animator.SetFloat("SpeedY", lastMove.y);
+
+        spriteRenderer.flipX = lastMove.x > 0;
 
         if(invincibleCoolDownTimer > 0)
         {
@@ -50,9 +58,14 @@ public class PlayerController : MonoBehaviour
             isInvincible = false;
         }
 
-        if(launchProjectileAction.WasPressedThisFrame())
+        if(launchProjectileAction.WasPressedThisFrame() && !animator.GetCurrentAnimatorStateInfo(0).IsName("Launch Blend Tree"))
         {
             LaunchProjectile();
+        }
+
+        if(interactionAction.WasPressedThisFrame())
+        {
+            FindFriend();
         }
     }
 
@@ -63,10 +76,25 @@ public class PlayerController : MonoBehaviour
 
     private void LaunchProjectile()
     {
-        Projectile projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
-        projectile.Launch(move, 300);
+        Projectile projectile = Instantiate(projectilePrefab, transform.position + Vector3.up * 0.75f, Quaternion.identity);
+        projectile.Launch(lastMove, 300);
 
         animator.SetTrigger("Launch");
+    }
+
+    private void FindFriend()
+    {
+        Vector2 rayStart = transform.position + Vector3.up * 0.2f;
+        Vector2 rayDirection = lastMove;
+        float rayLenght = 1.5f;
+
+        RaycastHit2D hit = Physics2D.Raycast(rayStart, rayDirection, rayLenght, LayerMask.GetMask("NPC"));
+        //Debug.DrawRay(rayStart, rayDirection.normalized * rayLenght, Color.red, 2f);
+
+        if(hit.collider != null)
+        {
+            Debug.Log("Raycast has hit the object " + hit.collider.gameObject);
+        }
     }
 
     public bool ChangeHP(int amount)
