@@ -89,11 +89,10 @@ public class PlayerController : MonoBehaviour
         float rayLenght = 1.5f;
 
         RaycastHit2D hit = Physics2D.Raycast(rayStart, rayDirection, rayLenght, LayerMask.GetMask("NPC"));
-        //Debug.DrawRay(rayStart, rayDirection.normalized * rayLenght, Color.red, 2f);
 
         if(hit.collider != null)
         {
-            Debug.Log("Raycast has hit the object " + hit.collider.gameObject);
+            UIHandler.Instance.ShowNPCDialog();
         }
     }
 
@@ -115,6 +114,8 @@ public class PlayerController : MonoBehaviour
         currentHP = Mathf.Clamp(currentHP + amount, 0, maxHP);
 
         Debug.Log("Current HP: " + currentHP + "/" + maxHP);
+       
+        UIHandler.Instance.UpdateHealthBar(currentHP / (float)maxHP); 
 
         return oldHP != currentHP;
     }
