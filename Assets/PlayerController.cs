@@ -10,9 +10,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private InputAction moveAction;
     [SerializeField] private InputAction launchProjectileAction;
     [SerializeField] private InputAction interactionAction;
+    [SerializeField] private AudioClip walkSound;
+    [SerializeField] private AudioClip launchSound;
+    [SerializeField] private Animator hitEffectAnimator;
 
     private Animator animator;
     private SpriteRenderer spriteRenderer;
+    private AudioSource audioSource;
     private Vector2 move;
     private Vector2 lastMove = Vector2.down;
     private int currentHP;
@@ -24,6 +28,7 @@ public class PlayerController : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
 
         currentHP = maxHP;
 
@@ -40,6 +45,16 @@ public class PlayerController : MonoBehaviour
         if (move.sqrMagnitude > 0.1f)
         {
             lastMove = move;
+
+            if (audioSource.clip == null)
+            {
+                audioSource.clip = walkSound;
+                audioSource.Play();
+            }
+        }
+        else
+        {
+            audioSource.clip = null;
         }
 
         animator.SetFloat("Speed", move.sqrMagnitude);
@@ -58,6 +73,7 @@ public class PlayerController : MonoBehaviour
             isInvincible = false;
         }
 
+        Debug.Log(animator.GetCurrentAnimatorStateInfo(0).nameHash);
         if(launchProjectileAction.WasPressedThisFrame() && !animator.GetCurrentAnimatorStateInfo(0).IsName("Launch Blend Tree"))
         {
             LaunchProjectile();
@@ -80,6 +96,7 @@ public class PlayerController : MonoBehaviour
         projectile.Launch(lastMove, 300);
 
         animator.SetTrigger("Launch");
+        audioSource.PlayOneShot(launchSound);
     }
 
     private void FindFriend()
@@ -107,6 +124,9 @@ public class PlayerController : MonoBehaviour
             else
             {
                 invincibleCoolDownTimer = invincibleTime;
+
+                hitEffectAnimator.SetTrigger("Hit");
+                animator.SetTrigger("Hit");
             }
         }
 
@@ -118,5 +138,10 @@ public class PlayerController : MonoBehaviour
         UIHandler.Instance.UpdateHealthBar(currentHP / (float)maxHP); 
 
         return oldHP != currentHP;
+    }
+
+    public void PlaySound(AudioClip clip)
+    {
+        audioSource.PlayOneShot(clip);
     }
 }

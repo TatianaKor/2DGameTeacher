@@ -4,6 +4,7 @@ public class ChangeHPZone : MonoBehaviour
 {
     [SerializeField] private int changeHPAmount;
     [SerializeField] private bool destroyAfterUse = false;
+    [SerializeField] private AudioClip onChangeHPSound;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -20,8 +21,13 @@ public class ChangeHPZone : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             PlayerController playerController = other.GetComponent<PlayerController>();
+            bool hpChanged = playerController.ChangeHP(changeHPAmount);
 
-            if (playerController.ChangeHP(changeHPAmount) && destroyAfterUse)
+            if (hpChanged)
+            {
+                playerController.PlaySound(onChangeHPSound);
+            }
+            if (hpChanged && destroyAfterUse)
             {
                 Destroy(gameObject);
             }

@@ -5,10 +5,14 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private bool isVertical;
     [SerializeField] private float changeDirectionTime;
+    [SerializeField] private ParticleSystem smokeEffect;
+    [SerializeField] private AudioClip fixedSound;
+    [SerializeField] private AudioClip[] hitSounds;
 
     private Animator animator;
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D rb;
+    private AudioSource audioSource;
     private float changeDirectionCooldownTimer;
     private bool isFixed = false;
 
@@ -17,6 +21,7 @@ public class EnemyController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
 
         changeDirectionCooldownTimer = changeDirectionTime;
     }
@@ -67,11 +72,20 @@ public class EnemyController : MonoBehaviour
         {
             PlayerController playerController = other.GetComponent<PlayerController>();
             playerController.ChangeHP(-1);
+
+            int randomIndex = Random.Range(0, hitSounds.Length);
+            audioSource.PlayOneShot(hitSounds[randomIndex]);
         }
         else if(other.CompareTag("Projectile"))
         {
             animator.SetTrigger("Fixed");
             isFixed = true;
+
+            audioSource.loop = false;
+            audioSource.clip = null;
+            audioSource.PlayOneShot(fixedSound);
+
+            smokeEffect.Stop();
         }
     }
 }

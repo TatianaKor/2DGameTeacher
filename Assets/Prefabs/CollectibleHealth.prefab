@@ -103,6 +103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   changeHPAmount: 2
   destroyAfterUse: 1
+  onChangeHPSound: {fileID: 8300000, guid: 173a14cf06354c643b46b235f2a4f974, type: 3}
 --- !u!58 &4509935410572233859
 CircleCollider2D:
   m_ObjectHideFlags: 0
