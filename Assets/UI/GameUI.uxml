@@ -1,5 +1,6 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:Template name="NPCDialog" src="project://database/Assets/UI/NPCDialog.uxml?fileID=9197481963319205126&amp;guid=2447d4a3523774c498c6f02e82cfbf03&amp;type=3#NPCDialog" />
+    <ui:Template name="CounterBar" src="project://database/Assets/UI/CounterBar.uxml?fileID=9197481963319205126&amp;guid=7ee8ed3a35cb5f541adc3ac6a09850b7&amp;type=3#CounterBar" />
     <ui:VisualElement name="HealthBarBackground" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/_2DAdventureGame/Art/Ruby/UI/UIHealthFrame.png?fileID=21300000&amp;guid=e04807cd45105ec409b00463fe6ab7b1&amp;type=3#UIHealthFrame&quot;); width: 582px; height: 297px; -unity-background-scale-mode: scale-to-fit;">
         <ui:VisualElement name="CharacterPortrait" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/_2DAdventureGame/Art/Ducko/UI/CharacterPortrait.png?fileID=21300000&amp;guid=0332b35b8fe3cf8458eb0558889493d1&amp;type=3#CharacterPortrait&quot;); -unity-background-scale-mode: scale-to-fit; position: absolute; height: 222px; width: 200px; top: 32px; left: 22px;" />
         <ui:VisualElement name="HealthBarContainer" style="flex-grow: 1; position: absolute; height: 95px; width: 319px; top: 92px; left: 241px;">
@@ -7,4 +8,5 @@
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:Instance template="NPCDialog" name="NPCDialog" style="position: absolute; top: 70%; left: 10%; right: 10%; bottom: 0%;" />
+    <ui:Instance template="CounterBar" name="CounterBar" style="position: absolute; top: 40px; left: auto; right: 40px; height: 127px; width: 300px;" />
 </ui:UXML>

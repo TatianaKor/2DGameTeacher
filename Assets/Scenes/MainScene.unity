@@ -3043,6 +3043,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayTime: 4
+  winScreen: {fileID: 9197481963319205126, guid: 63b3f26e0813e4f4086e7d98744e7b90,
+    type: 3}
+  loseScreen: {fileID: 9197481963319205126, guid: 5827fb9113db72347a71520df3c82d71,
+    type: 3}
 --- !u!1 &1078270495
 GameObject:
   m_ObjectHideFlags: 0

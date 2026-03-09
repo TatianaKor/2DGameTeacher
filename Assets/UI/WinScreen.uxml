@@ -1,0 +1,6 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Background" style="flex-grow: 1; width: 100%; height: 100%; background-image: none; background-color: rgb(0, 0, 0); position: absolute; -unity-background-scale-mode: scale-to-fit; align-items: center; align-self: center;">
+        <ui:VisualElement name="Image" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/_2DAdventureGame/Tutorial_Demo/Demo_Art/Common/WinScreen.png?fileID=-848381713617584042&amp;guid=d46766d63d5ca44c6b1a4d318b1eaf72&amp;type=3#WinScreen_0&quot;); position: absolute; height: 1037px; width: 708px; top: 0%; left: auto; bottom: auto; right: auto; align-items: flex-end; align-self: center; -unity-background-scale-mode: scale-to-fit;" />
+        <ui:Label text="You Won!!!" name="WinText" style="bottom: 100px; color: rgb(255, 255, 255); font-size: 100px; justify-content: flex-end; -unity-text-align: middle-center; position: absolute; -unity-font-style: bold;" />
+    </ui:VisualElement>
+</ui:UXML>

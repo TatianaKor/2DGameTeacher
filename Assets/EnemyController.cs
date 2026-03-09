@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
@@ -15,6 +16,8 @@ public class EnemyController : MonoBehaviour
     private AudioSource audioSource;
     private float changeDirectionCooldownTimer;
     private bool isFixed = false;
+
+    public event Action OnFixed;
 
     void Start()
     {
@@ -73,7 +76,7 @@ public class EnemyController : MonoBehaviour
             PlayerController playerController = other.GetComponent<PlayerController>();
             playerController.ChangeHP(-1);
 
-            int randomIndex = Random.Range(0, hitSounds.Length);
+            int randomIndex = UnityEngine.Random.Range(0, hitSounds.Length);
             audioSource.PlayOneShot(hitSounds[randomIndex]);
         }
         else if(other.CompareTag("Projectile"))
@@ -86,6 +89,8 @@ public class EnemyController : MonoBehaviour
             audioSource.PlayOneShot(fixedSound);
 
             smokeEffect.Stop();
+
+            OnFixed?.Invoke();
         }
     }
 }

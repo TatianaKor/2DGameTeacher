@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class UIHandler : MonoBehaviour
@@ -6,12 +7,18 @@ public class UIHandler : MonoBehaviour
     public static UIHandler Instance;
 
     [SerializeField] private float displayTime = 4f;
+    [SerializeField] private VisualTreeAsset winScreen;
+    [SerializeField] private VisualTreeAsset loseScreen;
 
+    private PlayerController player;
     private UIDocument uiDocument;
     private VisualElement healthBar;
     private VisualElement npcDialog;
+    private Label robotCounter;
 
     private float timerDisplay;
+    private int robotsCount;
+    private int robotsFixedCount;
 
     void Awake()
     {
@@ -34,6 +41,19 @@ public class UIHandler : MonoBehaviour
 
         npcDialog = uiDocument.rootVisualElement.Q<VisualElement>("NPCDialog");
         npcDialog.style.display = DisplayStyle.None;
+
+        robotCounter = uiDocument.rootVisualElement.Q<Label>("CounterLabel");
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        robotsCount = enemies.Length;
+        foreach(GameObject enemy in enemies)
+        {
+            EnemyController controller = enemy.GetComponent<EnemyController>();
+            controller.OnFixed += OnRobotFixed;
+        }
+        UpdateCounter();
+
+        player = GameObject.FindFirstObjectByType<PlayerController>();
+        player.OnTalkToNPC += ShowNPCDialog;
     }
 
     void Update()
@@ -48,9 +68,34 @@ public class UIHandler : MonoBehaviour
         }
     }
 
+    private void OnRobotFixed()
+    {
+        robotsFixedCount++;
+        UpdateCounter();
+    }
+
+    private void UpdateCounter()
+    {
+        if (robotsFixedCount == robotsCount)
+        {
+            robotCounter.text = "Talk to NPC";
+            player.OnTalkToNPC -= ShowNPCDialog;
+            player.OnTalkToNPC += ShowWinScreen;
+        }
+        else
+        {
+            robotCounter.text = $"{robotsFixedCount} / {robotsCount}";
+        }
+    }
+
     public void UpdateHealthBar(float percents)
     {
         healthBar.style.width = Length.Percent(percents * 100);
+
+        if(percents == 0)
+        {
+            ShowLoseScreen();
+        }
     }
 
     public void ShowNPCDialog()
@@ -58,5 +103,22 @@ public class UIHandler : MonoBehaviour
         npcDialog.style.display = DisplayStyle.Flex;
 
         timerDisplay = displayTime;
+    }
+
+    public void ShowWinScreen()
+    {
+        uiDocument.visualTreeAsset = winScreen;
+        Invoke(nameof(ReloadSceen), displayTime);
+    }
+
+    public void ShowLoseScreen()
+    {
+        uiDocument.visualTreeAsset = loseScreen;
+        Invoke(nameof(ReloadSceen), displayTime);
+    }
+
+    private void ReloadSceen()
+    {
+        SceneManager.LoadScene(0);
     }
 }

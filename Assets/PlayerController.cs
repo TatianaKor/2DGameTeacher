@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -22,6 +23,8 @@ public class PlayerController : MonoBehaviour
     private int currentHP;
     private float invincibleCoolDownTimer;
     private bool isInvincible = false;
+
+    public event Action OnTalkToNPC;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -109,7 +112,7 @@ public class PlayerController : MonoBehaviour
 
         if(hit.collider != null)
         {
-            UIHandler.Instance.ShowNPCDialog();
+            OnTalkToNPC?.Invoke();
         }
     }
 
